@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#163d35">
+  <meta name="description" content="Цифровой наставник для адаптации сотрудников системы молодежной политики ЛНР">
+  <title>Цифровой наставник</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Навигация">
+      <a class="brand" href="#" data-action="home" aria-label="Цифровой наставник, на главную">
+        <span class="brand-mark" aria-hidden="true">ЦН</span>
+        <span><strong>Цифровой</strong><small>наставник</small></span>
+      </a>
+
+      <div class="profile-card">
+        <div class="profile-top">
+          <span class="avatar" id="profileAvatar">Н</span>
+          <div><strong id="profileName">Новый сотрудник</strong><span id="profileRole">Начало маршрута</span></div>
+        </div>
+        <div class="progress-label"><span>Адаптация</span><b id="progressValue">0%</b></div>
+        <div class="progress-track"><span id="progressBar"></span></div>
+      </div>
+
+      <nav class="main-nav">
+        <button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span>Сегодня</button>
+        <button class="nav-item" data-view="route"><span class="nav-icon">↗</span>Мои 90 дней</button>
+        <button class="nav-item" data-view="situations"><span class="nav-icon">◇</span>Рабочая ситуация</button>
+        <button class="nav-item" data-view="knowledge"><span class="nav-icon">≡</span>База знаний</button>
+        <button class="nav-item" data-view="tasks"><span class="nav-icon">✓</span>Мои задания <span class="nav-count" id="taskCount">5</span></button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="support-link admin-link" data-action="admin"><span>⌘</span><b id="adminLinkText">Вход администратора</b></button>
+        <button class="support-link" data-action="expert"><span>?</span>Спросить специалиста</button>
+        <button class="support-link" data-action="rules"><span>i</span>О боте и правила</button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark">ЦН</span><strong>Цифровой наставник</strong></div>
+        <div class="status"><i></i><span>Материалы прототипа</span></div>
+        <button class="admin-badge" id="adminBadge" data-action="admin">Администратор</button>
+        <button class="search-button" data-view="knowledge" aria-label="Открыть поиск"><span>⌕</span><kbd>Поиск</kbd></button>
+        <button class="more-button" data-action="rules" aria-label="Правила">•••</button>
+      </header>
+
+      <section class="content" id="appContent" aria-live="polite"></section>
+    </main>
+
+    <nav class="mobile-nav" aria-label="Мобильная навигация">
+      <button class="active" data-view="home"><span>⌂</span>Сегодня</button>
+      <button data-view="route"><span>↗</span>Маршрут</button>
+      <button data-view="situations"><span>◇</span>Ситуации</button>
+      <button data-view="knowledge"><span>⌕</span>Поиск</button>
+    </nav>
+  </div>
+
+  <dialog id="modal" class="modal">
+    <button class="modal-close" data-action="close-modal" aria-label="Закрыть">×</button>
+    <div id="modalContent"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="glossary-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

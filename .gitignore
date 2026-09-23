@@ -1,0 +1,11 @@
+# Publish only the static application, not internal source documents.
+*.docx
+*.pdf
+*.xlsx
+*.ps1
+
+# Unused source images.
+/Карта  ЛНР.jpg
+/дом молодежи 5
+/дом молодежи 6
+/дом молодежи 7
