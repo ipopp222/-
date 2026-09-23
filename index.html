@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#163d35">
+  <meta name="theme-color" content="#12372e">
   <meta name="description" content="Цифровой наставник для адаптации сотрудников системы молодежной политики ЛНР">
   <title>Цифровой наставник</title>
   <link rel="stylesheet" href="styles.css">
@@ -12,7 +12,7 @@
   <div class="app-shell">
     <aside class="sidebar" aria-label="Навигация">
       <a class="brand" href="#" data-action="home" aria-label="Цифровой наставник, на главную">
-        <span class="brand-mark" aria-hidden="true">ЦН</span>
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 2 30 16 46 24 30 32 24 46 18 32 2 24 18 16Z"/><path class="brand-core" d="m24 15 9 9-9 9-9-9Z"/></svg></span>
         <span><strong>Цифровой</strong><small>наставник</small></span>
       </a>
 
@@ -23,7 +23,10 @@
         </div>
         <div class="progress-label"><span>Адаптация</span><b id="progressValue">0%</b></div>
         <div class="progress-track"><span id="progressBar"></span></div>
+        <button class="profile-edit" data-action="profile">Изменить профиль</button>
       </div>
+
+      <button class="sidebar-scroll" data-action="sidebar-scroll" aria-label="Прокрутить меню вниз" title="Прокрутить меню вниз"><span>↓</span>Ниже</button>
 
       <nav class="main-nav">
         <button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span>Сегодня</button>
@@ -31,6 +34,7 @@
         <button class="nav-item" data-view="situations"><span class="nav-icon">◇</span>Рабочая ситуация</button>
         <button class="nav-item" data-view="knowledge"><span class="nav-icon">≡</span>База знаний</button>
         <button class="nav-item" data-view="tasks"><span class="nav-icon">✓</span>Мои задания <span class="nav-count" id="taskCount">5</span></button>
+        <button class="nav-item admin-nav" id="adminNav" data-view="admin"><span class="nav-icon">⌘</span>Аналитика</button>
       </nav>
 
       <div class="sidebar-bottom">
@@ -42,7 +46,7 @@
 
     <main class="workspace">
       <header class="topbar">
-        <div class="mobile-brand"><span class="brand-mark">ЦН</span><strong>Цифровой наставник</strong></div>
+        <div class="mobile-brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 2 30 16 46 24 30 32 24 46 18 32 2 24 18 16Z"/><path class="brand-core" d="m24 15 9 9-9 9-9-9Z"/></svg></span><strong>Цифровой наставник</strong></div>
         <div class="status"><i></i><span>Материалы прототипа</span></div>
         <button class="admin-badge" id="adminBadge" data-action="admin">Администратор</button>
         <button class="search-button" data-view="knowledge" aria-label="Открыть поиск"><span>⌕</span><kbd>Поиск</kbd></button>
@@ -50,6 +54,21 @@
       </header>
 
       <section class="content" id="appContent" aria-live="polite"></section>
+      <section class="support-footer" aria-label="Онлайн-форма технической поддержки">
+        <div class="support-mascot" aria-hidden="true">
+          <svg viewBox="0 0 180 150">
+            <path class="mascot-tail" d="M132 92c31-17 42 4 28 19-11 12-29 8-36-1 19 3 24-9 8-18Z"/>
+            <path class="mascot-ear" d="m50 48 8-37 29 30M130 48l-8-37-29 30"/>
+            <path class="mascot-face" d="M42 61c3-27 22-39 48-39s45 12 48 39v35c0 25-21 42-48 42S42 121 42 96Z"/>
+            <path class="mascot-mask" d="M50 70c18-17 30-13 40 2 10-15 22-19 40-2-3 31-17 52-40 52S53 101 50 70Z"/>
+            <path class="mascot-eye" d="M64 78h13l-6 8ZM103 78h13l-7 8Z"/>
+            <path class="mascot-nose" d="m90 91 8 8-8 6-8-6Z"/>
+            <path class="mascot-spark" d="m90 2 4 9 10 4-10 4-4 10-4-10-10-4 10-4Z"/>
+          </svg>
+        </div>
+        <div class="support-copy"><span class="support-status"><i></i> Онлайн-форма</span><p class="support-name">Искорик · цифровой проводник</p><h2>Застряли? Давайте разберёмся.</h2><p>Опишите техническую проблему или непонятный шаг. Искорик поможет собрать обращение без лишних данных.</p></div>
+        <button class="support-cta" data-action="tech-support"><span>Задать вопрос</span><i>↗</i></button>
+      </section>
     </main>
 
     <nav class="mobile-nav" aria-label="Мобильная навигация">
