@@ -598,6 +598,30 @@ h1 { margin-bottom: 16px; font: 700 clamp(34px, 5vw, 60px)/.98 var(--serif); let
 @keyframes popup-in { from { opacity: 0; transform: translateY(20px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .modal::backdrop { background: rgba(15,35,30,.62); backdrop-filter: blur(5px); }
 .modal-close { position: sticky; z-index: 3; top: 16px; float: right; width: 34px; height: 34px; margin: 16px 16px -50px 0; border: 0; border-radius: 50%; cursor: pointer; color: var(--muted); background: #eef0eb; font-size: 22px; }
+.modal.welcome-dialog { width: min(1120px, calc(100% - 32px)); max-height: calc(100vh - 32px); overflow: auto; overflow-x: hidden; border-radius: 8px 36px 8px 36px; }
+.modal.welcome-dialog .modal-close { display: none; }
+.minister-welcome { min-width: 0; min-height: 680px; display: grid; grid-template-columns: 43% 57%; outline: none; }
+.minister-welcome-photo { position: relative; min-height: 680px; overflow: hidden; color: #fff; background: var(--green); }
+.minister-welcome-photo::after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(5,18,15,.92)); pointer-events: none; }
+.minister-welcome-photo img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.minister-welcome-photo > div { position: absolute; z-index: 1; right: 32px; bottom: 29px; left: 32px; }
+.minister-welcome-photo strong, .minister-welcome-photo span { display: block; }
+.minister-welcome-photo strong { font: 700 25px/1.1 var(--serif); }
+.minister-welcome-photo span { margin-top: 5px; color: #d6e1dd; font-size: 9px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.minister-welcome-content { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 44px 50px; overflow-wrap: anywhere; }
+.minister-welcome-content > * { width: 100%; max-width: 100%; }
+.minister-welcome-content .eyebrow { margin-bottom: 14px; }
+.minister-welcome-content h2 { max-width: 590px; margin-bottom: 20px; font: 700 clamp(35px, 4vw, 52px)/.95 var(--serif); letter-spacing: -1.7px; }
+.minister-welcome-content h2 em { color: var(--red); font-style: normal; }
+.minister-welcome-content p { max-width: 610px; margin-bottom: 18px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.minister-welcome-content .minister-welcome-lead { color: var(--green); font: 700 18px/1.35 var(--serif); }
+.minister-welcome-content blockquote { max-width: 610px; margin: 2px 0 18px; padding: 16px 19px; border-left: 4px solid var(--red); color: #fff; background: var(--green); font: 700 14px/1.45 var(--serif); }
+.minister-signature { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.minister-signature i { width: 43px; height: 1px; background: var(--red); }
+.minister-signature strong, .minister-signature small { display: block; }
+.minister-signature strong { font: 700 15px/1.1 var(--serif); }
+.minister-signature small { margin-top: 3px; color: var(--muted); font-size: 7px; letter-spacing: .05em; text-transform: uppercase; }
+.minister-welcome-content .primary-button { padding: 14px 20px; }
 .modal-body { padding: 34px; }
 .modal-body h2 { margin-bottom: 10px; padding-right: 32px; font: 700 27px/1.1 var(--serif); }
 .modal-lead { color: var(--muted); font-size: 13px; }
@@ -775,8 +799,8 @@ h1 { margin-bottom: 16px; font: 700 clamp(34px, 5vw, 60px)/.98 var(--serif); let
   .development-profile-grid { grid-template-columns: 1fr; }
   .glossary-grid { grid-template-columns: 1fr; }
   .industry-stats { grid-template-columns: repeat(2, 1fr); }
-  .mobile-nav { position: fixed; z-index: 20; right: 12px; bottom: 10px; left: 12px; display: grid; grid-template-columns: repeat(4, 1fr); padding: 7px; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(22,61,53,.96); box-shadow: 0 12px 32px rgba(13,37,31,.28); backdrop-filter: blur(12px); }
-  .mobile-nav button { min-width: 0; display: grid; place-items: center; gap: 1px; padding: 4px; border: 0; border-radius: 12px; color: #a8bdb7; background: transparent; font-size: 8px; }
+  .mobile-nav { position: fixed; z-index: 20; right: 12px; bottom: 10px; left: 12px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 7px; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(22,61,53,.96); box-shadow: 0 12px 32px rgba(13,37,31,.28); backdrop-filter: blur(12px); }
+  .mobile-nav button { min-width: 0; display: grid; place-items: center; align-content: center; gap: 1px; padding: 4px 2px; border: 0; border-radius: 12px; color: #a8bdb7; background: transparent; font-size: 8px; line-height: 1.05; text-align: center; }
   .mobile-nav button span { font-size: 18px; }
   .mobile-nav button.active { color: #fff; background: var(--red); }
   .support-footer { width: min(100% - 32px, 720px); grid-template-columns: 165px 1fr; gap: 18px; margin-bottom: 100px; padding-right: 25px; }
@@ -846,6 +870,16 @@ h1 { margin-bottom: 16px; font: 700 clamp(34px, 5vw, 60px)/.98 var(--serif); let
   .task-evidence-rule { grid-template-columns: 1fr; }
   .task-evidence-rule p { grid-column: 1; }
   .modal { width: calc(100% - 18px); max-height: calc(100vh - 18px); border-radius: 19px; }
+  .modal.welcome-dialog { width: calc(100% - 18px); max-height: calc(100vh - 18px); border-radius: 19px; }
+  .minister-welcome { min-height: 0; grid-template-columns: 1fr; }
+  .minister-welcome-photo { min-height: 260px; height: 42vh; max-height: 360px; }
+  .minister-welcome-photo > div { right: 20px; bottom: 19px; left: 20px; }
+  .minister-welcome-photo strong { font-size: 21px; }
+  .minister-welcome-content { padding: 28px 22px 31px; }
+  .minister-welcome-content h2 { font-size: clamp(32px, 10vw, 43px); }
+  .minister-welcome-content .minister-welcome-lead { font-size: 17px; }
+  .minister-welcome-content blockquote { font-size: 13px; }
+  .minister-welcome-content .primary-button { width: 100%; }
   .modal-body { padding: 27px 20px; }
   .event-direction-grid, .event-steps { grid-template-columns: 1fr; }
   .event-direction-card { min-height: 215px; }

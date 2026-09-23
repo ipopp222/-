@@ -529,7 +529,7 @@ const youthHousePhotos = [
 ];
 
 const ADMIN_NAME = 'Инесса Артющенко';
-const defaultState = { onboarded: false, startedAt: 0, userId: '', name: '', location: '', organization: '', workplace: '', stage: 'Первый день', completed: [], taskNotes: {}, taskEvidence: {}, dailyTaskAssignments: {}, dailyMissions: {}, dailyReflections: {}, eventDrafts: {}, eventPlans: {}, missionTestAnswers: {}, developmentProfile: null, isAdmin: false, gameBest: 0, gameBlock: null, gameResults: {} };
+const defaultState = { welcomeSeen: false, onboarded: false, startedAt: 0, userId: '', name: '', location: '', organization: '', workplace: '', stage: 'Первый день', completed: [], taskNotes: {}, taskEvidence: {}, dailyTaskAssignments: {}, dailyMissions: {}, dailyReflections: {}, eventDrafts: {}, eventPlans: {}, missionTestAnswers: {}, developmentProfile: null, isAdmin: false, gameBest: 0, gameBlock: null, gameResults: {} };
 let state = loadState();
 let analytics = loadAnalytics();
 let currentView = 'home';
@@ -1641,9 +1641,24 @@ function openRules() {
   modal.showModal();
 }
 
+function openMinisterWelcome() {
+  modal.classList.add('welcome-dialog');
+  modalContent.innerHTML = `<section class="minister-welcome" tabindex="-1"><div class="minister-welcome-photo"><img src="Голубович М.А..jpg" alt="Михаил Голубович"><div><strong>Михаил Голубович</strong><span>Министр молодёжной политики ЛНР</span></div></div><div class="minister-welcome-content"><span class="eyebrow">Личное приветствие</span><h2>Добро пожаловать в команду <em>молодёжной политики ЛНР</em></h2><p class="minister-welcome-lead">Мы искренне рады, что теперь вы с нами. Здесь важен каждый человек — его знания, энергия, идеи и неравнодушие.</p><p>Вам предстоит помогать молодым людям быть услышанными, находить возможности, собирать команды и превращать инициативы в реальные дела. За каждым документом, встречей и проектом будет стоять чья-то возможность сделать уверенный шаг вперёд.</p><blockquote>Будущее Луганской Народной Республики создаётся в том числе вашим ежедневным трудом. Вместе мы открываем для молодёжи возможности расти, брать ответственность и участвовать в развитии родного края.</blockquote><p>Не бойтесь задавать вопросы, обращаться за поддержкой и предлагать новое. Первые 90 дней помогут вам познакомиться с системой, людьми и своей профессиональной миссией. Пусть вашей опорой станут уважение к человеку, ответственность за результат и вера в созидательную силу молодёжи.</p><div class="minister-signature"><i></i><span><strong>Михаил Голубович</strong><small>Министр молодёжной политики Луганской Народной Республики</small></span></div><button class="primary-button" data-action="accept-welcome">Начать путь вместе →</button></div></section>`;
+  if (!modal.open) modal.showModal();
+  modal.scrollTop = 0;
+  modalContent.querySelector('.minister-welcome').focus({ preventScroll: true });
+}
+
+function acceptMinisterWelcome() {
+  state.welcomeSeen = true;
+  saveState();
+  modal.classList.remove('welcome-dialog');
+  openOnboarding();
+}
+
 function openOnboarding() {
   modalContent.innerHTML = `<div class="onboarding"><div class="onboarding-art"><span>Первые 90 дней.<br>Вместе и по шагам.</span></div><div class="onboarding-content"><span class="eyebrow">Настройка маршрута</span><h2>${state.onboarded ? 'Профиль пользователя' : 'Давайте познакомимся'}</h2><p class="modal-lead">Данные сохраняются только в вашем браузере и используются в локальной аналитике администратора.</p><div class="form-grid"><label>Как к вам обращаться<input id="onboardingName" value="${escapeHtml(state.name)}" placeholder="Имя" required></label><label>Город или район<input id="onboardingLocation" value="${escapeHtml(state.location)}" placeholder="Например: Луганск" required></label><label>Организация или подразделение<input id="onboardingOrganization" value="${escapeHtml(state.organization)}" placeholder="Полное или краткое название" required></label></div><b>Тип учреждения</b><div class="choice-grid" id="workplaceChoices">${['Министерство', 'Орган местного самоуправления', 'Молодежный центр', 'Другое учреждение'].map(choice => `<button class="choice ${state.workplace === choice ? 'selected' : ''}" data-choice="${choice}">${choice}</button>`).join('')}</div><div class="safety-note"><b>Локальный режим</b><span>Профиль и статистика доступны администратору только в этом браузере и не передаются на другие устройства.</span></div><br><button class="primary-button" data-action="finish-onboarding">${state.onboarded ? 'Сохранить профиль' : 'Начать маршрут'}</button></div></div>`;
-  modal.showModal();
+  if (!modal.open) modal.showModal();
 }
 
 function finishOnboarding() {
@@ -1769,6 +1784,7 @@ document.addEventListener('click', async event => {
   if (action.dataset.action === 'start-game') startGame();
   if (action.dataset.action === 'rules') openRules();
   if (action.dataset.action === 'close-modal') modal.close();
+  if (action.dataset.action === 'accept-welcome') acceptMinisterWelcome();
   if (action.dataset.action === 'finish-onboarding') finishOnboarding();
   if (action.dataset.action === 'glossary-materials') openGlossaryMaterials();
   if (action.dataset.action === 'event-hub') renderEventHub();
@@ -1834,7 +1850,11 @@ document.addEventListener('input', event => {
 });
 
 modal.addEventListener('click', event => {
-  if (event.target === modal) modal.close();
+  if (event.target === modal && !modal.classList.contains('welcome-dialog')) modal.close();
+});
+
+modal.addEventListener('cancel', event => {
+  if (modal.classList.contains('welcome-dialog')) event.preventDefault();
 });
 
 modal.addEventListener('close', () => {
@@ -1842,6 +1862,7 @@ modal.addEventListener('close', () => {
   modal.classList.remove('event-modal');
   modal.classList.remove('support-dialog');
   modal.classList.remove('track-dialog');
+  modal.classList.remove('welcome-dialog');
   closePhotoLightbox();
 });
 
@@ -1868,4 +1889,4 @@ document.addEventListener('keydown', event => {
 updateProfile();
 trackVisit();
 renderHome();
-if (!state.onboarded) setTimeout(openOnboarding, 250);
+if (!state.onboarded) setTimeout(state.welcomeSeen ? openOnboarding : openMinisterWelcome, 250);
